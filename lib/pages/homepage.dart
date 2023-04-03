@@ -12,12 +12,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  
   @override
-  var f=false;
+  var f = false;
   var x = 0;
   var index2 = 0;
   var chinmaydays = List.filled(31, false);
+  var prajyotdays = List.filled(31, false);
+  var varundays = List.filled(31, false);
+  var hemantdays = List.filled(31, false);
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -33,7 +35,7 @@ class _HomePageState extends State<HomePage> {
       body: ListView.builder(
           itemCount: 31, // the length
           itemBuilder: (context, index) {
-            index2=index;
+            index2 = index;
             index = index + 1;
             return Container(
               decoration: const BoxDecoration(
@@ -54,7 +56,9 @@ class _HomePageState extends State<HomePage> {
                                     top: 5), //apply padding to all four sides
                                 child: Text("Chinmay"),
                               ),
-                              Text(chinmaydays[index2].toString())
+                              chinmaydays[index2].toString() == "true"
+                                  ? Icon(Icons.check)
+                                  : Icon(Icons.wrong_location)
                             ]),
                           ),
                           Container(
@@ -64,9 +68,9 @@ class _HomePageState extends State<HomePage> {
                                     top: 5), //apply padding to all four sides
                                 child: Text("Prajyot"),
                               ),
-                              Icon(
-                                Icons.check_box,
-                              )
+                              prajyotdays[index2].toString() == "true"
+                                  ? Icon(Icons.check)
+                                  : Icon(Icons.wrong_location)
                             ]),
                           ),
                           Container(
@@ -76,9 +80,9 @@ class _HomePageState extends State<HomePage> {
                                     top: 5), //apply padding to all four sides
                                 child: Text("Hemant"),
                               ),
-                              Icon(
-                                Icons.check_box,
-                              )
+                              hemantdays[index2].toString() == "true"
+                                  ? Icon(Icons.check)
+                                  : Icon(Icons.wrong_location)
                             ]),
                           ),
                           Container(
@@ -88,9 +92,9 @@ class _HomePageState extends State<HomePage> {
                                     top: 5), //apply padding to all four sides
                                 child: Text("Varun"),
                               ),
-                              Icon(
-                                Icons.check_box,
-                              )
+                              varundays[index2].toString() == "true"
+                                  ? Icon(Icons.check)
+                                  : Icon(Icons.wrong_location)
                             ]),
                           ),
                         ],
@@ -115,8 +119,11 @@ class _HomePageState extends State<HomePage> {
           if (res.statusCode == 200) {
             var data = await json.decode(res.body);
             setState(() {
-              for(int i=0;i<31;i++){
-                chinmaydays[i]=data["days"][i]["chinmay"];
+              for (int i = 0; i < 31; i++) {
+                chinmaydays[i] = data["days"][i]["chinmay"];
+                hemantdays[i] = data["days"][i]["hemant"];
+                varundays[i] = data["days"][i]["varun"];
+                prajyotdays[i] = data["days"][i]["prajyot"];
               }
             });
             print(chinmaydays);
