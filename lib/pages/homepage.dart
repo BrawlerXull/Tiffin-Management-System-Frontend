@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: ListView.builder(
-          itemCount: 31, // the length
+          itemCount: 31,
           itemBuilder: (context, index) {
             index2 = index;
             index = index + 1;
